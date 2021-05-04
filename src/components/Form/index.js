@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import axios from 'axios'
 
-import { View, Text } from "react-native";
+import { View } from "react-native";
 
 import * as S from "./styles";
 
@@ -86,7 +86,6 @@ const Form = () => {
         )}
         name="uf"
         rules={{ required: true }}
-        defaultValue=""
       />
 
       {errors.uf && <S.Error>Campo obrigatório.</S.Error>}

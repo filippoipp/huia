@@ -3,6 +3,7 @@ import { RectButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View`
     padding: 60px;
+    margin-top: -80px;
 `;
 
 export const InputSection = styled.View`
