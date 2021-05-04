@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView } from 'react-native';
+import { ScrollView } from "react-native";
 
 import * as S from "./styles";
 
@@ -9,15 +9,15 @@ import Icons from "../../components/Icons";
 
 const MaxDoctor = () => {
   return (
-      <ScrollView>
-        <S.Container>
-          <S.Background source={require("../../assets/Background.png")}>
-            <Header />
-            <Form />
-            <Icons />
-          </S.Background>
-        </S.Container>
-      </ScrollView>
+    <S.Container>
+      <S.Background source={require("../../assets/Background.png")}>
+        <ScrollView style={{ flex: 1 }}>
+          <Header />
+          <Form />
+          <Icons />
+        </ScrollView>
+      </S.Background>
+    </S.Container>
   );
 };
 
