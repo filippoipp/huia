@@ -1,37 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import axios from 'axios'
+import axios from "axios";
 
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 
 import * as S from "./styles";
 
 const Form = () => {
   const [selectedUf, setSelectedUf] = useState();
   const [estados, setEstados] = useState([]);
-  let ufs = []
+  let ufs = [];
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
 
+  const onSubmit = (data) =>
+    Alert.alert(
+      "Sucesso",
+      `CRM: ${JSON.stringify(data.crm)}, Estado: ${JSON.stringify(data.uf)}
+      `
+    );
   async function handleUf() {
     try {
-      const res = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-      res.data.map(uf => {
-        ufs.push(uf.nome)
-      })
-      setEstados(ufs)
+      const res = await axios.get(
+        "https://servicodados.ibge.gov.br/api/v1/localidades/estados"
+      );
+      res.data.map((uf) => {
+        ufs.push(uf.nome);
+      });
+      setEstados(ufs);
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
   }
 
   useEffect(() => {
-    handleUf()
-  }, [])
+    handleUf();
+  }, []);
 
   return (
     <S.Container>
@@ -45,7 +52,7 @@ const Form = () => {
               onChangeText={(value) => onChange(value)}
               value={value}
               placeholder="000000"
-              placeholderTextColor={'black'}
+              placeholderTextColor={"black"}
             />
           </S.InputSection>
         )}
@@ -54,8 +61,12 @@ const Form = () => {
         defaultValue=""
       />
 
-      {errors.crm && errors.crm.type === 'required' && <S.Error>Campo obrigatório.</S.Error>}
-      {errors.crm && errors.crm.type === 'minLength' && <S.Error>Mínimo 5 caracteres.</S.Error>}
+      {errors.crm && errors.crm.type === "required" && (
+        <S.Error>Campo obrigatório.</S.Error>
+      )}
+      {errors.crm && errors.crm.type === "minLength" && (
+        <S.Error>Mínimo 5 caracteres.</S.Error>
+      )}
 
       <View
         style={{
@@ -70,16 +81,13 @@ const Form = () => {
           <S.SelectSection>
             <S.SelectLabel>UF</S.SelectLabel>
             <S.Select
-              selectedValue={selectedUf}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedUf(itemValue)
-              }
+              selectedValue={value}
+              onBlur={onBlur}
+              onValueChange={(itemValue, itemIndex) => onChange(itemValue)}
             >
-              <S.Select.Item label={'Selecione'} value={''} />
+              <S.Select.Item label={"Selecione"} value={""} />
               {estados.map((uf, index) => {
-                return (
-                  <S.Select.Item key={index} label={uf} value={uf} />
-                )
+                return <S.Select.Item key={index} label={uf} value={uf} />;
               })}
             </S.Select>
           </S.SelectSection>
